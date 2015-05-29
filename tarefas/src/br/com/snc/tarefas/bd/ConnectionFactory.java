@@ -15,6 +15,6 @@ public class ConnectionFactory {
 			throw new SQLException(e);
 		}
 		
-		return DriverManager.getConnection("jdbc:mysql://localhost/spring","root", "");
+		return DriverManager.getConnection("jdbc:mysql://localhost/test","root", "");
 	}
 }

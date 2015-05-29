@@ -23,7 +23,7 @@ public class JdbcTarefaDao {
        }
 
 	public void adiciona(Tarefa tarefa) {
-		String sql = "insert into tarefas (descricao, finalizado) values (?,?)";
+		String sql = "insert into tarefas (descricao, finalizacao) values (?,?)";
 		PreparedStatement stmt;
 		try {
 			stmt = connection.prepareStatement(sql);
@@ -38,7 +38,7 @@ public class JdbcTarefaDao {
 	public void remove(Tarefa tarefa) {
 
 		if(tarefa.getId() == null) {
-			throw new IllegalStateException("Id da tarefa n√£o deve ser nula.");
+			throw new IllegalStateException("Id da tarefa n√o deve ser nula.");
 		}
 		
 		String sql = "delete from tarefas where id = ?";
@@ -53,13 +53,17 @@ public class JdbcTarefaDao {
 	}
 
 	public void altera(Tarefa tarefa) {
-		String sql = "update tarefas set descricao = ?, finalizado = ?, dataFinalizacao = ? where id = ?";
+		String sql = "update tarefas set descricao = ?, finalizacao = ?, dataFinalizacao = ? where id = ?";
 		PreparedStatement stmt;
 		try {
 			stmt = connection.prepareStatement(sql);
 			stmt.setString(1, tarefa.getDescricao());
 			stmt.setBoolean(2, tarefa.isFinalizado());
-			stmt.setDate(3, tarefa.getDataFinalizacao() != null ? new Date(tarefa.getDataFinalizacao().getTimeInMillis()) : null);
+			
+//			stmt.setDate(3, tarefa.getDataFinalizacao() != null ? new Date(tarefa.getDataFinalizacao().getTimeInMillis()) : null);
+			Date date = tarefa.getDataFinalizacao() != null ? new Date(tarefa.getDataFinalizacao().getTimeInMillis()) : null;
+			stmt.setDate(3, date);
+			
 			stmt.setLong(4, tarefa.getId());
 			stmt.execute();
 		} catch (SQLException e) {
@@ -91,7 +95,7 @@ public class JdbcTarefaDao {
 	public Tarefa buscaPorId(Long id) {
                
                if(id == null) {
-                       throw new IllegalStateException("Id da tarefa n√£o deve ser nula.");
+                       throw new IllegalStateException("Id da tarefa n√o deve ser nula.");
                }
                
                try {
@@ -138,7 +142,7 @@ public class JdbcTarefaDao {
 		//popula o objeto tarefa
 		tarefa.setId(rs.getLong("id"));
 		tarefa.setDescricao(rs.getString("descricao"));
-		tarefa.setFinalizado(rs.getBoolean("finalizado"));
+		tarefa.setFinalizado(rs.getBoolean("finalizacao"));
 		
 		//popula a data de finalizacao da tarefa, fazendo a conversao
 		Date data = rs.getDate("dataFinalizacao");

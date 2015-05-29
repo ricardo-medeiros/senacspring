@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Sistema Spring</title>
+<title>Lista de Tarefas</title>
 </head>
 <body>
-
+	<h2>Pagina Inicial</h2>
+	<p>Bem vindo, ${usuarioLogado.login}</p>
+	<a href="listaTarefas">Clique Aqui</a> para acessar a Lista de Tarefas
+	<a href="logout" >LogOut</a>
 </body>
 </html>

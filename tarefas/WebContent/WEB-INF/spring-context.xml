@@ -13,6 +13,9 @@
 	<context:component-scan base-package="br.com.snc.tarefas" />
 	<mvc:annotation-driven />
 	<mvc:default-servlet-handler/>
+	<mvc:interceptors>
+		<bean class="br.com.snc.tarefas.interceptor.AutorizadorInterceptor"></bean>
+	</mvc:interceptors>
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
